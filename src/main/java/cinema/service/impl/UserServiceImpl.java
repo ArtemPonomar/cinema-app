@@ -1,6 +1,8 @@
 package cinema.service.impl;
 
+import cinema.dao.ShoppingCartDao;
 import cinema.dao.UserDao;
+import cinema.model.ShoppingCart;
 import cinema.model.User;
 import cinema.service.UserService;
 import java.util.Optional;
@@ -11,16 +13,21 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final PasswordEncoder encoder;
     private final UserDao userDao;
+    private final ShoppingCartDao shoppingCartDao;
 
-    public UserServiceImpl(PasswordEncoder encoder, UserDao userDao) {
+    public UserServiceImpl(PasswordEncoder encoder,
+                           UserDao userDao,
+                           ShoppingCartDao shoppingCartDao) {
         this.encoder = encoder;
         this.userDao = userDao;
+        this.shoppingCartDao = shoppingCartDao;
     }
 
     @Override
     public User add(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
-        return userDao.add(user);
+        shoppingCartDao.add(new ShoppingCart(user));
+        return user;
     }
 
     @Override
