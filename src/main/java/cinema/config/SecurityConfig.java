@@ -30,7 +30,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/register").permitAll()
+                .antMatchers(HttpMethod.POST,
+                        "/register")
+                .permitAll()
                 .antMatchers(HttpMethod.GET,
                         "/cinema-halls",
                         "/movies",
@@ -41,15 +43,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST,
                         "/cinema-halls",
                         "/movies",
-                        "/movie-sessions").hasAuthority(Role.RoleName.ADMIN.name())
-                .antMatchers(HttpMethod.PUT, "/movie-sessions").hasAuthority(Role.RoleName.ADMIN.name())
-                .antMatchers(HttpMethod.DELETE, "/movie-sessions").hasAuthority(Role.RoleName.ADMIN.name())
+                        "/movie-sessions")
+                .hasAuthority(
+                        Role.RoleName.ADMIN.name())
+                .antMatchers(HttpMethod.PUT,
+                        "/movie-sessions")
+                .hasAuthority(
+                        Role.RoleName.ADMIN.name())
+                .antMatchers(HttpMethod.DELETE,
+                        "/movie-sessions")
+                .hasAuthority(
+                        Role.RoleName.ADMIN.name())
                 .antMatchers(HttpMethod.GET,
                         "/orders",
-                        "/shopping-carts/by-user").hasAuthority(Role.RoleName.USER.name())
-                .antMatchers(HttpMethod.POST, "/orders/complete").hasAuthority(Role.RoleName.USER.name())
-                .antMatchers(HttpMethod.PUT, "/shopping-carts/movie-sessions").hasAuthority(Role.RoleName.USER.name())
-                .antMatchers(HttpMethod.GET, "/users/by-email").hasAuthority(Role.RoleName.ADMIN.name())
+                        "/shopping-carts/by-user")
+                .hasAuthority(
+                        Role.RoleName.USER.name())
+                .antMatchers(HttpMethod.POST,
+                        "/orders/complete")
+                .hasAuthority(
+                        Role.RoleName.USER.name())
+                .antMatchers(HttpMethod.PUT,
+                        "/shopping-carts/movie-sessions")
+                .hasAuthority(
+                        Role.RoleName.USER.name())
+                .antMatchers(HttpMethod.GET,
+                        "/users/by-email")
+                .hasAuthority(
+                        Role.RoleName.ADMIN.name())
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
